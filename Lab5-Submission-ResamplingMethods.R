@@ -99,4 +99,4 @@ print(predictions_nb_e1071)
 plot(table(predictions_nb_e1071,
                        PimaIndiansDiabetes_test[, c("pregnant","glucose","pressure","triceps","mass","pedigree","age","insulin","diabetes")]$diabetes))
 
-                       
+
