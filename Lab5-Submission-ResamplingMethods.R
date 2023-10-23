@@ -100,3 +100,20 @@ plot(table(predictions_nb_e1071,
                        PimaIndiansDiabetes_test[, c("pregnant","glucose","pressure","triceps","mass","pedigree","age","insulin","diabetes")]$diabetes))
 
 
+
+## 5. Classification: SVM with Repeated k-fold Cross Validation ----
+
+train_control <- trainControl(method = "repeatedcv", number = 5, repeats = 3)
+
+PimaIndiansDiabetes_model_svm <-
+  caret::train(`diabetes` ~ ., data = PimaIndiansDiabetes_train,
+               trControl = train_control, na.action = na.omit,
+               method = "svmLinearWeights2", metric = "Accuracy")
+
+### 5.b. Test the trained SVM model using the testing dataset ----
+predictions_svm <- predict(PimaIndiansDiabetes_model_svm, PimaIndiansDiabetes_test[, 1:8])
+
+### 5.c. View a summary of the model and view the confusion matrix ----
+print(PimaIndiansDiabetes_model_svm)
+caret::confusionMatrix(predictions_svm, PimaIndiansDiabetes_test$diabetes)
+
